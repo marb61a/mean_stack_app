@@ -17,6 +17,8 @@ mongoose.connect(config.database, function(err){
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
+var api = require('./app/routes/api')(app, express);
+app.use('/api', api);
 
 app.get('*', function(req, res){
   res.sendfile(_dirname = '/public/views/index.html');
