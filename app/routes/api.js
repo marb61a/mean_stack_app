@@ -1,14 +1,16 @@
 var User = require('../models/user');
 var config = require('../../config');
+var Story = require('../models/story');
 
 var secretKey = config.secretKey;
 
 var jsonwebtoken = require('jsonwebtoken');
 
+
 //Must be outside module 
 function createtoken(user){
   var token = jsonwebtoken.sign({
-    _id: user.id,
+    id: user.id,
     name: user.username
   }, secretKey, {
     expiresInMinutes: 1440
@@ -98,9 +100,43 @@ module.exports = function(app, express){
     
   });
   
-  api.get('/', function(req, res){
-    res.json("Hello World")
+  // Destination when legitimate token is provided
+ api.route('/')
+   .post(function(req, res){
+     var story = new story({
+       creator : req.decoded.id,
+       content: req.body.content,      
+     });
+   
+   story.save(function(err){
+     if(err){
+       res.send(err);
+       return;
+   }
+     res.json({
+       message: "New Story Created"
+     });
+   
+   });
+ }) 
+   
+  
+  .get(function(req, res){
+    Story.find({ creator: req.decoded.id,}, function(err, stories){
+      if(err){
+       res.send(err);
+       return;
+       }
+      res.json(stories);
+      
+    });
+    
+  });
+  
+  // fetches user login data to be used on frontend
+  api.get('/me', function(req,res){
+    res.json(req.decoded);
   })
   
-  return api;
+  return api
 }
