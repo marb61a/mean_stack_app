@@ -11,7 +11,8 @@ var jsonwebtoken = require('jsonwebtoken');
 function createtoken(user){
   var token = jsonwebtoken.sign({
     id: user.id,
-    name: user.username
+    name: user.name,
+    username: user.username
   }, secretKey, {
     expiresInMinutes: 1440
   });
