@@ -1,1 +1,1 @@
-angular.module('MyStoryApp', []);
+angular.module('MyStoryApp', ['appRoutes', 'mainCtrl','authService']);
