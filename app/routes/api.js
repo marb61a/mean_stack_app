@@ -30,13 +30,19 @@ module.exports = function(app, express){
       password: req.body.password
     });
     
+    var token = createToken(user);
+    
     user.save(function(err){
       if(err){
         res.send(err);
         return;
       }
       
-      res.json({message: 'User has been created'});
+      res.json({
+        success: true,
+        message: 'User has been created',
+        token: token
+      });
       
     });
     
@@ -59,7 +65,7 @@ module.exports = function(app, express){
       {
       username: req.body.username
       }
-    ).select('password').exec(function(err, user){
+    ).select('name username password').exec(function(err, user){
       if(err) throw err;
       if(!user){
         res.send({message: "user does not exist"});
