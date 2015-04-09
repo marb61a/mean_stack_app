@@ -1,9 +1,38 @@
-<div class="jumbotron text-center">
+<!---Will not show if user is logged in --->
+<div class="jumbotron text-center" ng-if="!main.loggedIn">
   <div>
     <h1> Sign Up Now!!</h1>
   </div>
   <div>
     <p>Login to Write Your Story</p>
     <a href="/login" class="btn btn-primary">Login</a>
+  </div>
+</div>
+
+<div class="row" ng-if="main.loggedIn">
+  <div class="col-md-3">
+  </div>
+  <div class="col-md-4" ng-controller="StoryConstroller as story">
+    <div class="row">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          Write Your Story 
+        </div>
+        <div class="panel-body">
+          <form ng-submit="sotry.createStory()">
+            <input class="form-control input-lg" type="text" name="story" ng-model="story.storyData.content" placeholder="........." required>
+          </form> 
+        </div>
+      </div>
+      <div class="panel panel-successs">
+        <div class="panel-body" ng-repeat="each in story.stories">
+          <p>
+           {{ each.content }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
   </div>
 </div>
