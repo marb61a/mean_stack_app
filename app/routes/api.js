@@ -22,6 +22,15 @@ function createtoken(user){
 
 module.exports = function(app, express){
   var api = express.Router();
+  api.get('/all_stories', function(req, res){
+    Story.find({}, function(){
+      if(err){
+        red.send(err);
+        return;
+      }
+      res.json(stories);
+    });
+  });
   
   api.post('/signup', function(req, res){
     var user = new User({
@@ -115,11 +124,13 @@ module.exports = function(app, express){
        content: req.body.content,      
      });
    
-   story.save(function(err){
+   story.save(function(err, newStory){
      if(err){
        res.send(err);
        return;
    }
+     io.emit('story', newStory);
+     
      res.json({
        message: "New Story Created"
      });

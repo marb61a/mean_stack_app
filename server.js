@@ -4,6 +4,8 @@ var morgan = require('morgan');
 var config = require('./config.js');
 var mongoose = require('mongoose');
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 mongoose.connect(config.database, function(err){
    if(err){
@@ -26,7 +28,7 @@ app.get('*', function(req, res){
 });
 
 
-app.listen(config.port, function(err){
+http.listen(config.port, function(err){
   if(err){
     console.log(err);
   }else{
