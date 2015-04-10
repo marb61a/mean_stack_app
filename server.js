@@ -24,7 +24,7 @@ var api = require('./app/routes/api')(app, express, io);
 app.use('/api', api);
 
 app.get('*', function(req, res){
-  res.sendfile(_dirname = '/public/app/views/index.html');
+  res.sendfile(__dirname = '/public/app/views/index.html');
 });
 
 http.listen(config.port, function(err){
