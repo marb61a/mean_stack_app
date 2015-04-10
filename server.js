@@ -20,13 +20,12 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/public'));
-var api = require('./app/routes/api')(app, express);
+var api = require('./app/routes/api')(app, express, io);
 app.use('/api', api);
 
 app.get('*', function(req, res){
   res.sendfile(_dirname = '/public/app/views/index.html');
 });
-
 
 http.listen(config.port, function(err){
   if(err){
@@ -35,3 +34,4 @@ http.listen(config.port, function(err){
     console.log("Listening on post 3000");
   }
 });
+

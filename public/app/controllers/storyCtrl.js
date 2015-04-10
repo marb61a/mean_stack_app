@@ -4,17 +4,19 @@ angular.module('storyCtrl', ['storyService'])
   
   var vm = this ;
   
-  Story.allStory()
+  Story.all()
     .success(function(data){
       vm.stories = data;
     });
   
-  vm.createStory = function(){    
+  vm.createStory = function(){  
+    vm.processing = true;
     vm.message = '';
     
     Story.create(vm.storyData)
     .success(function(data){
-      vm.storyData = '';
+      vm.processing = false;
+      vm.storyData = {};
       vm.message = data.message;      
     });
   };
@@ -30,6 +32,3 @@ angular.module('storyCtrl', ['storyService'])
      vm.stories.push(data);
    });
 });
-
-
- 

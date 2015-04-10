@@ -31,13 +31,9 @@ angular.module('appRoutes', ['ngRoute'])
         }
       })
   
-  $locationProvider.html5mode(
-  {
-    enabled: true,
-    requireBase: false
-  });
+  $locationProvider.html5mode(true);
   
-});
+})
 
 
             

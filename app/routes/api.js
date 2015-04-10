@@ -20,12 +20,12 @@ function createtoken(user){
   return token;
 }
 
-module.exports = function(app, express){
+module.exports = function(app, express, io){
   var api = express.Router();
   api.get('/all_stories', function(req, res){
-    Story.find({}, function(){
+    Story.find({}, function(err, stories){
       if(err){
-        red.send(err);
+        res.send(err);
         return;
       }
       res.json(stories);
@@ -79,7 +79,7 @@ module.exports = function(app, express){
       if(!user){
         res.send({message: "user does not exist"});
       } else if(user){
-          var validPassword = user.comparedPassword(req.body.password);
+          var validPassword = user.comparePassword(req.body.password);
             if(!validPassword){
               res.send({message: "Invalid Password"});
             }else{
@@ -88,7 +88,7 @@ module.exports = function(app, express){
                 success: true,
                 message: "Successfully Logged In",
                 token: token
-              })
+              });
             }
       }
       
@@ -98,13 +98,13 @@ module.exports = function(app, express){
   
   api.use(function(req, res, next){
     console.log("Somebody visited our app");
-    var token = req.body.token || req.param("token") || req.headers[x-access-token]
+    var token = req.body.token || req.param("token") || req.headers[x-access-token];
     
     // Check for token existence
     if(token){
       jsonwebtoken.verify(token, secretKey, function(err, decoded){
         if(err){
-          res.status(403).send({success: false, message: "Failed to Authenticate"})
+          res.status(403).send({success: false, message: "Failed to Authenticate"});
         }else{
           req.decoded = decoded;
           next();
@@ -121,7 +121,7 @@ module.exports = function(app, express){
    .post(function(req, res){
      var story = new story({
        creator : req.decoded.id,
-       content: req.body.content,      
+       content: req.body.content      
      });
    
    story.save(function(err, newStory){
@@ -153,4 +153,4 @@ module.exports = function(app, express){
     res.json(req.decoded);
   });  
   return api;
-};
+}

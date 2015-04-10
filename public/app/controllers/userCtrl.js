@@ -20,7 +20,7 @@ angular.module('userCtrl', ['userService'])
     $window.localStorage.setItem('token', response.data.token);
     $location.path('/');  
     });
-  };
+  }
 });
 
 

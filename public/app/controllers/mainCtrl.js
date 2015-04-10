@@ -30,12 +30,10 @@ angular.module('mainCtrl', [])
         var error = data.message;
       }
     });
-  };
+  }
   
   vm.doLogout = function(){
     Auth.logout();
     $location.path('/logout');
-  };
+  }
 });
-
-                
