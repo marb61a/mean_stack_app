@@ -23,15 +23,19 @@ angular.module('mainCtrl', [])
         .then(function(data){
           var user = data.data;
       });
-      if(data.success)
+      if(data.success){
          $location.path('/');
-      else
+      }
+      else{
         var error = data.message;
+      }
     });
-  }
+  };
   
   vm.doLogout = function(){
     Auth.logout();
     $location.path('/logout');
-  }
+  };
 });
+
+                

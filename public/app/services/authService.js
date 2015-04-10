@@ -1,7 +1,7 @@
 angular.module( 'authService', [])
 
 .factory('Auth', function($http, $q, AuthToken){
-  var authFactory = ();
+  var authFactory = {};
   authFactory.login = function(username, password){
     return $http.post('/api/login', {
       username: username,
@@ -10,43 +10,48 @@ angular.module( 'authService', [])
     .success(function(data){
       AuthToken.setToken(data.token)
       return data;
-    })
-  }
+    });
+  };
   
   authFactory.logout = function(){
     AuthToken.setToken();
-  }
+  };
   
   authFactory.isLoggedIn = function(){
-    if(AuthToken.getToken())
+    if(AuthToken.getToken()){
       return true;
-    else
+    }
+    else{
       return false;
-    
-  }
+    }
+  };
   
   authFactory.getUser = function(){
-    if(AuthToken.getToken())
+    if(AuthToken.getToken()){
       return $http.get('/api/me');
-    else 
+    }
+    else {
       return $q.reject({message: "User does not have a token"});
+    }
   }
-  return authFactory;
+    return authFactory;
 })
 
 .factory('AuthToken', function($window){
-  var authTokenFactory = ();
+  var authTokenFactory = {};
   //gets token from browser
   authTokenFactory.getToken = function(){
     return $window.localStorage.getItem('token');
   }
   
   authTokenFactory.setToken = function(token){
-    if(token)
+    if(token){
       $window.localStorage.setItem('token', token);
-    else
+    }
+    else{
        $window.localStorage.removeItem('token');
-  }
+    }
+  };
   
   return authTokenFactory;
 })
@@ -64,11 +69,12 @@ angular.module( 'authService', [])
   };
   
   interceptorFactory.responseError = function(response){
-    if(response.status == 403)
-      $location.path('login');
+    if(response.status == 403){
+      $location.path('/login');
+    }
     
     return $q.reject(response);
-  }
+  };
   
   return interceptorFactory;
 });

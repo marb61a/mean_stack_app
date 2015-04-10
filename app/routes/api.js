@@ -137,24 +137,20 @@ module.exports = function(app, express){
    
    });
  }) 
-   
-  
+    
   .get(function(req, res){
     Story.find({ creator: req.decoded.id,}, function(err, stories){
       if(err){
        res.send(err);
        return;
        }
-      res.json(stories);
-      
-    });
-    
+      res.json(stories);      
+    });    
   });
   
   // fetches user login data to be used on frontend
   api.get('/me', function(req,res){
     res.json(req.decoded);
-  })
-  
-  return api
-}
+  });  
+  return api;
+};

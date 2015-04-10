@@ -3,3 +3,5 @@ angular.module('MyStoryApp', ['appRoutes', 'mainCtrl','authService', 'userCtrl',
 .config(function($httpProvider){
   $httpProvider.interceptors.push('AuthInterceptor');
 })
+
+

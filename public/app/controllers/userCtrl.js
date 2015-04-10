@@ -5,20 +5,23 @@ angular.module('userCtrl', ['userService'])
   User.all()
     .success(function(data){
     vm.users = data;
-  })
+  });
 })
 
-.controller('UserCreatorController', function(User, $location, $window){
+.controller('UserCreateController', function(User, $location, $window){
   var vm = this;
   vm.signupUser = function(){
     vm.message = '';
     User.create(vm.userData)
       .then(function(response){
-        userData = ();
+        userData = {};
         vm.message = response.data.message;
       
     $window.localStorage.setItem('token', response.data.token);
     $location.path('/');  
-    })
-  }
-})
+    });
+  };
+});
+
+
+                    
