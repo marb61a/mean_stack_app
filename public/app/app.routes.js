@@ -31,9 +31,5 @@ angular.module('appRoutes', ['ngRoute'])
         }
       })
   
-  $locationProvider.html5mode(true);
-  
+  $locationProvider.html5mode(true);  
 })
-
-
-            
