@@ -11,11 +11,11 @@ angular.module( 'authService', [])
       AuthToken.setToken(data.token)
       return data;
     });
-  };
+  }
   
   authFactory.logout = function(){
     AuthToken.setToken();
-  };
+  }
   
   authFactory.isLoggedIn = function(){
     if(AuthToken.getToken()){
@@ -24,7 +24,7 @@ angular.module( 'authService', [])
     else{
       return false;
     }
-  };
+  }
   
   authFactory.getUser = function(){
     if(AuthToken.getToken()){
@@ -70,4 +70,3 @@ angular.module( 'authService', [])
 	};
 	return interceptorFactory;
 });
-

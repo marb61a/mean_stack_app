@@ -1,22 +1,19 @@
 var User = require('../models/user');
 var config = require('../../config');
 var Story = require('../models/story');
-
 var secretKey = config.secretKey;
-
 var jsonwebtoken = require('jsonwebtoken');
 
 
 //Must be outside module 
 function createtoken(user){
   var token = jsonwebtoken.sign({
-    id: user.id,
+    id: user._id,
     name: user.name,
     username: user.username
   }, secretKey, {
     expiresInMinutes: 1440
-  });
-  
+  }); 
   return token;
 }
 
@@ -51,12 +48,10 @@ module.exports = function(app, express, io){
         success: true,
         message: 'User has been created',
         token: token
-      });
-      
-    });
-    
+      });      
+    });   
   });
-  
+ 
   api.get('users', function(req, res){
     User.find({}, function(err, users){
       if(err){
@@ -95,10 +90,10 @@ module.exports = function(app, express, io){
     });
     
   });
-  
+ 
   api.use(function(req, res, next){
     console.log("Somebody visited our app");
-    var token = req.body.token || req.param("token") || req.headers[x-access-token];
+    var token = req.body.token || req.param("token") || req.headers['x-access-token'];
     
     // Check for token existence
     if(token){
@@ -144,13 +139,14 @@ module.exports = function(app, express, io){
        res.send(err);
        return;
        }
-      res.json(stories);      
+      res.send(stories);      
     });    
   });
   
   // fetches user login data to be used on frontend
   api.get('/me', function(req,res){
-    res.json(req.decoded);
+    res.send(req.decoded);
   });  
   return api;
 }
+

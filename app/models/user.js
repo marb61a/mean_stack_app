@@ -10,7 +10,6 @@ var UserSchema = new Schema({
   
 });
 
-
 // Password hashing function, pre is a mongoose function for doing
 // prior to database saving
 UserSchema.pre('save', function(next){

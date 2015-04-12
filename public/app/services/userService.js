@@ -7,7 +7,9 @@ angular.module('userService', [])
   }
   userFactory.all = function(){
     return $http.get('/api/users');
-  };  
+  }
+  
   return userFactory;
 });
+
 
