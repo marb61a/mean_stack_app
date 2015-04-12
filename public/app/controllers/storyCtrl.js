@@ -1,7 +1,6 @@
 angular.module('storyCtrl', ['storyService'])
 
-.controller('StoryController', function(Story, socketio){
-  
+.controller('StoryController', function(Story, socketio){  
   var vm = this ;
   
   Story.all()
@@ -13,7 +12,7 @@ angular.module('storyCtrl', ['storyService'])
     vm.processing = true;
     vm.message = '';
     
-    Story.create(vm.storyData)
+  Story.create(vm.storyData)
     .success(function(data){
       vm.processing = false;
       vm.storyData = {};

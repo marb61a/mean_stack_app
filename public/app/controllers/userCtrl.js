@@ -5,7 +5,7 @@ angular.module('userCtrl', ['userService'])
   User.all()
     .success(function(data){
     vm.users = data;
-  });
+  })
 })
 
 .controller('UserCreateController', function(User, $location, $window){
@@ -19,9 +19,9 @@ angular.module('userCtrl', ['userService'])
       
     $window.localStorage.setItem('token', response.data.token);
     $location.path('/');  
-    });
+    })
   }
-});
+})
 
 
 

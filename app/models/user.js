@@ -1,8 +1,6 @@
 var mongoose = require('mongoose');
-
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
-
 var UserSchema = new Schema({
   name: String,
   username: {type: String, required: true, index:{unique: true}},
@@ -31,7 +29,3 @@ UserSchema.methods.comparePassword = function(password){
 };
 
 module.exports = mongoose.model('User', UserSchema);
-
-
-
-
